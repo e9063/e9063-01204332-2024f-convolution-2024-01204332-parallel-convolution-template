@@ -25,19 +25,12 @@ int main(void) {
   int NF = 5;
   int NO = NA - NF + 1;
 
-  // int *A = malloc(sizeof(int) * NA);
-  // int *F = malloc(sizeof(int) * NF);
-
   int A[] = { 7, 5, 3, 2, 0, 4, 2, 5 };
   int F[] = { 1, 2, 2, 1, 1 };
   int* O = (int*)calloc(NO, sizeof(int));
 
-  // printarr(A, NA);
-  // printarr(F, NF);
-
   for (int i = 0; i < NO; i++) {
     for (int m = i; m < NF + i; m++) {
-      // int k = A[m] * F[m - i];
       O[i] += A[m] * F[m - i];
     }
   }

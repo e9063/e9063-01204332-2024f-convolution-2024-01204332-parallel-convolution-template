@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 
 void printarr_vert(int* arr, int len) {
   for (int i = 0; i < len; i++) {
@@ -25,17 +26,18 @@ int main(void) {
 
   int *O = calloc(NO, sizeof(int));
 
-  for (int i = 0; i < NO; i++) {
-    for (int m = i; m < NF + i; m++) {
-      O[i] += A[m] * F[m - i];
+  #pragma omp parallel shared(A) shared(F) shared(O)
+  {
+    #pragma omp for
+    for (int i = 0; i < NO; i++) {
+      #pragma omp critical
+      for (int m = i; m < NF + i; m++) {
+        O[i] += A[m] * F[m - i];
+      }
     }
   }
 
   printarr_vert(O, NO);
-
-  free(O);
-  free(A);
-  free(F);
 
   return 0;
 }
